@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using ConsoleApp.Models;
 
 class Program
 {
@@ -16,16 +17,22 @@ class Program
         string[] month = new string[] { "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre" };
         string closedMonth = "Aout";
         double tauxPrime = 0;
-
+        User u1 = new User();
+        u1.Id = 1;
         Console.OutputEncoding = System.Text.Encoding.UTF8;
+        Console.WriteLine("quel est votre prenom ");
+        u1.FirstName = Console.ReadLine();
+        Console.WriteLine("quel est votre nom ");
+        u1.LastName = Console.ReadLine();
+        Console.WriteLine("quel est votre age ? ");
+        u1.Old = Console.ReadLine();
         Console.WriteLine("Quel est votre Salaire annuel Brut : ");
-        bool salaryInInt = int.TryParse(Console.ReadLine().Replace("€", ""), out int salary);
+        bool salaryInInt = int.TryParse(u1.Salary = Console.ReadLine().Replace("€", ""), out int salary);
         Console.WriteLine("\nQuel est votre Taux d'imposition : ");
-        double taxes = double.Parse(Console.ReadLine().Replace("%", ""));
+        double taxes = double.Parse(u1.Tax = Console.ReadLine().Replace("%", ""));
         Console.WriteLine("\nVous avez un salaire de : " + salary + "€ Brut" + "\nImposable a " + taxes + "%");
         double salaryNet = Math.Round(calculateSalary(salary, taxes), 2);
         Console.WriteLine("\nVous gagnez donc : " + salaryNet + "€ Net");
-
         switch (salary)
         
         {
@@ -69,6 +76,7 @@ class Program
                 }
             }
         }
+        Console.WriteLine(" id: " + u1.Id + " Nom: " + u1.FirstName + " Prenom: " + u1.LastName + "age: " + u1.Old + "salaire : " + u1.Salary + "taxe: " + u1.Tax);
         Console.ReadLine();
     }
 }
