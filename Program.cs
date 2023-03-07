@@ -1,61 +1,64 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 class Program
 {
-    static int CalculateSalary(int salary, int tax)
+
+
+    static double calculateSalary(int salary, double taxes)
     {
-        return (salary * (1 - tax / 100)) / 12;
+        return salary * (1 - taxes / 100);
     }
+
     static void Main(string[] args)
     {
+        string[] month = new string[] { "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre" };
+        string closedMonth = "Aout";
+        double tauxPrime = 0.10;
+
         Console.OutputEncoding = System.Text.Encoding.UTF8;
-        Console.WriteLine("Enter salary before tax: ");
-        bool salaryIsInt = int.TryParse(Console.ReadLine(), out int salary);
+        Console.WriteLine("Quel est votre Salaire annuel Brut : ");
+        bool salaryInInt = int.TryParse(Console.ReadLine().Replace("€", ""), out int salary);
+        Console.WriteLine("\nQuel est votre Taux d'imposition : ");
+        double taxes = double.Parse(Console.ReadLine().Replace("%", ""));
+        Console.WriteLine("\nVous avez un salaire de : " + salary + "€ Brut" + "\nImposable a " + taxes + "%");
+        double salaryNet = Math.Round(calculateSalary(salary, taxes), 2);
+        Console.WriteLine("\nVous gagnez donc : " + salaryNet + "€ Net");
+
         switch (salary)
         {
             case >= 50000:
-            
-                Console.WriteLine("faite des dons pour réduire les impots");
+                Console.WriteLine("Je vous conseille de faire des dons à des associations tels que l'Oeuvre des Pupilles pour réduire votre Imposition");
                 break;
-            case <= 1500:
-            
-                Console.WriteLine("c'est normal pour un alternant");
+
+            case <= 1500 * 12:
+                Console.WriteLine("Ce salaire est normal pour un alternant");
                 break;
-            case > 30000:
-                if (salary < 40000) 
-                {
-                    Console.WriteLine("venez au Cesi faire un bac +5");
-                }
+
+            case <= 40000 when salary >= 30000:
+                Console.WriteLine("Venez travailler chez CESI vous gagnerez 10000€ brut");
+                break;
+
+            default:
+                Console.WriteLine("Vous avez un salaire correct");
                 break;
         }
-        if (salaryIsInt)
-        {
-            Console.WriteLine("Enter the value of tax: ");
-            bool taxIsInt = int.TryParse(Console.ReadLine(), out int tax);
-            if (taxIsInt)
-                {
-                    double netSalary = CalculateSalary(salary, tax);
 
-                    Console.WriteLine("Si votre salaire est de " + salary + "est la tax de " + tax + "% alors votre net mensuel est " + netSalary + "€");
+        foreach (string eachMonth in month)
+        {
+            if (eachMonth != closedMonth)
+            {
+                if (eachMonth == "Décembre")
+                {
+                    Console.WriteLine("\n" + eachMonth + " : " + ((salaryNet / 12) * (1 + tauxPrime)));
                 }
                 else
                 {
-                Console.WriteLine("Sorry but yout tax it's not an integer");
+                    Console.WriteLine("\n" + eachMonth + " : " + salaryNet / 12);
                 }
-        }
-        else
-        {
-            Console.WriteLine("Sorry but your salary it's not an integer");
+            }
         }
         Console.ReadLine();
-        
-        //int salary = int.Parse(Console.ReadLine());
-        //Console.WriteLine("Enter the value of tax: ");
-        //int tax = int.Parse(Console.ReadLine());
-       // int netSalary = CalculateSalary(salary, tax);
-        
-       // Console.ReadLine();
     }
-
 }
