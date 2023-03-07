@@ -15,7 +15,7 @@ class Program
     {
         string[] month = new string[] { "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre" };
         string closedMonth = "Aout";
-        double tauxPrime = 0.10;
+        double tauxPrime = 0;
 
         Console.OutputEncoding = System.Text.Encoding.UTF8;
         Console.WriteLine("Quel est votre Salaire annuel Brut : ");
@@ -27,6 +27,7 @@ class Program
         Console.WriteLine("\nVous gagnez donc : " + salaryNet + "€ Net");
 
         switch (salary)
+        
         {
             case >= 50000:
                 Console.WriteLine("Je vous conseille de faire des dons à des associations tels que l'Oeuvre des Pupilles pour réduire votre Imposition");
@@ -44,7 +45,15 @@ class Program
                 Console.WriteLine("Vous avez un salaire correct");
                 break;
         }
-
+        
+        try
+        {
+            Console.WriteLine("\n prime de noel: ");
+            bool prime = double.TryParse(Console.ReadLine(), out double tauxprime);
+        }catch(FormatException)
+        {
+            Console.WriteLine("c'est pas ça");
+        }
         foreach (string eachMonth in month)
         {
             if (eachMonth != closedMonth)
