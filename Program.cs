@@ -54,6 +54,7 @@ class Program
         {
             Console.WriteLine("c'est pas ça");
         }
+
         foreach (string eachMonth in month)
         {
             if (eachMonth != closedMonth)
